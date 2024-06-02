@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-"""Initialize Flask web application."""
+"""Starts a Flask Web Application."""
 from models import storage
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-from os import environ
 from flask import Flask, render_template
 import uuid
 
@@ -13,10 +12,10 @@ app = Flask(__name__)
 
 @app.teardown_appcontext
 def close_db(error):
-    """Close the current database session."""
+    """Close the current SQLAlchemy Session."""
     storage.close()
 
-@app.route('/0-hbnb/', strict_slashes=False)
+@app.route('/2-hbnb/', strict_slashes=False)
 def hbnb():
     """Render the main HBNB page."""
     # Retrieve and sort states
@@ -37,7 +36,7 @@ def hbnb():
     places = sorted(places, key=lambda k: k.name)
     cache_id = uuid.uuid4()
 
-    return render_template('0-hbnb.html',
+    return render_template('2-hbnb.html',
                            states=st_ct,
                            amenities=amenities,
                            places=places,
